@@ -1,0 +1,18 @@
+{
+  "name": "purescript-moore-machines",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "output"
+  ],
+  "dependencies": {
+    "purescript-prelude": "^3.1.1",
+    "purescript-maybe": "^3.0.0",
+    "purescript-tuples": "^4.1.0",
+    "purescript-newtype": "^2.0.0",
+    "purescript-unfoldable": "^3.1.0",
+    "purescript-transformers": "^3.5.0"
+  },
+  "devDependencies": {}
+}
