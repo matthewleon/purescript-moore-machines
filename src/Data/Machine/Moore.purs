@@ -45,8 +45,8 @@ forEach m f = tailRecM go
     Just (Tuple s' o) -> f o *> pure (Loop s')
     Nothing           -> pure $ Done unit
 
-always :: forall s. s -> Moore s s
-always s = moore \_ -> Just (Tuple s s)
+repeat :: forall s. s -> Moore s s
+repeat s = moore \_ -> Just (Tuple s s)
 
 infinite :: forall s o. (s -> Tuple s o) -> Moore s o
 infinite = moore <<< map Just
@@ -54,10 +54,9 @@ infinite = moore <<< map Just
 stateOnly :: forall s. (s -> Maybe s) -> Moore s s
 stateOnly = moore <<< map (map double)
 
-stateOnlyInfinite :: forall s. (s -> s) -> Moore s s
-stateOnlyInfinite = moore <<< map (Just <<< double)
+iterate :: forall s. (s -> s) -> Moore s s
+iterate = moore <<< map (Just <<< double)
 
 -- | Utility function
 double :: forall a. a -> Tuple a a
 double x = Tuple x x
-
