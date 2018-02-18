@@ -25,6 +25,9 @@ instance applicativeMoore :: Applicative (Moore state) where
 -- bind, monad, and friends
 -- foldable, etc.
 
+moore :: forall s o. (s -> Maybe (Tuple s o)) -> Moore s o
+moore = Moore
+
 step :: forall s o. s -> Moore s o -> Maybe (Tuple s o)
 step state (Moore transition) = transition state
 
