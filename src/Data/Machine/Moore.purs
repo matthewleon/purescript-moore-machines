@@ -57,6 +57,8 @@ stateOnly = moore <<< map (map double)
 iterate :: forall s. (s -> s) -> Moore s s
 iterate = moore <<< map (Just <<< double)
 
+--TODO: cycle from Data.List.Lazy
+
 -- | Utility function
 double :: forall a. a -> Tuple a a
 double x = Tuple x x
