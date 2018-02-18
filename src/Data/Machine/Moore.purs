@@ -38,7 +38,7 @@ toUnfoldable m = unfoldr unfoldStep
   where
   unfoldStep b = swap <$> step b m
 
-forEach :: forall m a s o. MonadRec m => Moore s o -> (o -> m a) -> s -> m Unit
+forEach :: forall m s o. MonadRec m => Moore s o -> (o -> m Unit) -> s -> m Unit
 forEach m f = tailRecM go
   where
   go s = case step s m of
