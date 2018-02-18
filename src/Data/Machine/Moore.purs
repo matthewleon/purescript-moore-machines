@@ -48,6 +48,12 @@ forEach m f = tailRecM go
 repeat :: forall s. s -> Moore s s
 repeat s = moore \_ -> Just (Tuple s s)
 
+replicate :: forall o. Int -> o -> Moore Int o
+replicate i o = moore \i' ->
+  if i - i' > 0
+    then Just (Tuple (i' - 1) o)
+    else Nothing
+
 infinite :: forall s o. (s -> Tuple s o) -> Moore s o
 infinite = moore <<< map Just
 
