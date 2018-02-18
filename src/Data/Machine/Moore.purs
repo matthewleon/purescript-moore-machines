@@ -45,6 +45,9 @@ forEach m f = tailRecM go
     Just (Tuple s' o) -> f o *> pure (Loop s')
     Nothing           -> pure $ Done unit
 
+always :: forall s. s -> Moore s s
+always s = moore \_ -> Just (Tuple s s)
+
 infinite :: forall s o. (s -> Tuple s o) -> Moore s o
 infinite = moore <<< map Just
 
