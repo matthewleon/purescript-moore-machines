@@ -48,7 +48,7 @@ forEach m f = tailRecM go
 forever :: forall s o. (s -> Tuple s o) -> Moore s o
 forever = moore <<< map Just
 
-iterate :: forall s. (s -> Maybe s) -> Moore s s
-iterate = moore <<< map (map double)
+stateOnly :: forall s. (s -> Maybe s) -> Moore s s
+stateOnly = moore <<< map (map double)
   where
   double x = Tuple x x
