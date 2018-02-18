@@ -63,6 +63,14 @@ stateOnly = moore <<< map (map double)
 iterate :: forall s. (s -> s) -> Moore s s
 iterate = moore <<< map (Just <<< double)
 
+iterateN :: forall s. Int -> (s -> s) -> Moore (Tuple Int s) s
+iterateN i f = moore \(Tuple i' s) ->
+  if i - i' > 0
+    then
+      let s' = f s
+      in Just $ Tuple (Tuple (i' - 1) s') s'
+    else Nothing
+
 --TODO: cycle from Data.List.Lazy
 
 -- | Utility function
