@@ -81,17 +81,6 @@ upTo s =
       then Nothing
       else double <$> succ' s'
 
-{-
-TODO: think more about this
-iterateUntil :: forall s. Int -> (s -> s) -> Moore (Tuple Int s) s
-iterateUntil i f = moore \(Tuple i' s) ->
-  if i - i' > 0
-    then
-      let s' = f s
-      in Just $ Tuple (Tuple (i' - 1) s') s'
-    else Nothing
--}
-
 --TODO: cycle from Data.List.Lazy
 
 -- | Utility function
