@@ -13,7 +13,8 @@
     "purescript-newtype": "^2.0.0",
     "purescript-unfoldable": "^3.1.0",
     "purescript-transformers": "^3.5.0",
-    "purescript-enums": "^3.2.1"
+    "purescript-enums": "^3.2.1",
+    "purescript-st": "^3.0.0"
   },
   "devDependencies": {
     "purescript-console": "^3.0.0"

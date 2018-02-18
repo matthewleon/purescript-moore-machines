@@ -10,9 +10,9 @@ import Data.Tuple (Tuple(..), swap)
 import Data.Unfoldable (class Unfoldable, unfoldr)
 
 -- TODO: linearity? Mutate the Maybe Tuple behind the scenes?
-newtype Moore s o = Moore (s -> Maybe (Tuple s o))
+newtype Moore state output = Moore (state -> Maybe (Tuple state output))
 
-derive instance newtypeMoore :: Newtype (Moore s o) _
+derive instance newtypeMoore :: Newtype (Moore state output) _
 
 instance functorMoore :: Functor (Moore state) where
   map f (Moore t) = Moore $ map (map f) <$> t
