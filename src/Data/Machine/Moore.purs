@@ -3,6 +3,7 @@ module Data.Machine.Moore where
 import Prelude
 
 import Control.Monad.Rec.Class (class MonadRec, Step(..), tailRecM)
+import Data.Enum (class Enum, succ)
 import Data.Maybe (Maybe(..))
 import Data.Newtype (class Newtype)
 import Data.Tuple (Tuple(..), swap)
@@ -63,13 +64,33 @@ stateOnly = moore <<< map (map double)
 iterate :: forall s. (s -> s) -> Moore s s
 iterate = moore <<< map (Just <<< double)
 
-iterateN :: forall s. Int -> (s -> s) -> Moore (Tuple Int s) s
-iterateN i f = moore \(Tuple i' s) ->
+-- this is still faster than upTo for Ints
+upToN :: Int -> Moore Int Int
+upToN i = moore \i' ->
+  if i == i'
+    then Nothing
+    else let i'' = i' + 1 in Just $ double i''
+
+upTo :: forall s. Enum s => s -> Moore s s
+upTo s =
+  -- optimize by hoisting TC dictionary lookups
+  let succ' = succ :: s -> Maybe s
+      eq' = eq :: s -> s -> Boolean
+  in moore \s' ->
+    if eq' s s'
+      then Nothing
+      else double <$> succ' s'
+
+{-
+TODO: think more about this
+iterateUntil :: forall s. Int -> (s -> s) -> Moore (Tuple Int s) s
+iterateUntil i f = moore \(Tuple i' s) ->
   if i - i' > 0
     then
       let s' = f s
       in Just $ Tuple (Tuple (i' - 1) s') s'
     else Nothing
+-}
 
 --TODO: cycle from Data.List.Lazy
 
